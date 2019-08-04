@@ -18,9 +18,11 @@ OBJ_DIR	:= ./obj
 LIB_DIR	:= ./libft
 
 SRC		:= main.c \
-			line.c \
+			fill.c \
 			color.c \
-			bonus.c
+			image.c \
+			keys.c \
+			validation.c
 OBJ		:= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 CC		:= gcc
