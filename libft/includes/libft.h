@@ -15,6 +15,28 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include "libft.h"
+# define BUFF_SIZE 1
+
+typedef struct		s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct		s_fd
+{
+	int				fd;
+	int				state;
+	size_t			numlines;
+	t_list			*res;
+	struct s_fd		*next;
+}					t_fd;
+
+int					get_next_line(const int fd, char **line);
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
@@ -76,13 +98,6 @@ int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_whitespace(char c);
 char				**ft_strsplit(char const *s, char c);
-
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));

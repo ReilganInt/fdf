@@ -12,18 +12,6 @@
 
 #include "fdf.h"
 
-/*
-**	esc = exit
-**	116 = up h
-**	121 = down h
-**	126 = up image
-**	125 = down image
-**	123 = left image
-**  124 = right image
-**	69 = plus image
-**	78 = minus image
-*/
-
 void		check_key(int keycode, t_fdf *all)
 {
 	if (keycode == 53)
@@ -31,18 +19,18 @@ void		check_key(int keycode, t_fdf *all)
 		free_tab(all->map, all->col);
 		exit(EXIT_FAILURE);
 	}
-	if (keycode == 116)
-		all->ha = 1;
-	if (keycode == 121)
-		all->ha = -1;
+	if (keycode == 47)
+		all->height = 1;
+	if (keycode == 43)
+		all->height = -1;
 	if (keycode == 126)
-		all->py -= 20;
+		all->py -= 10;
 	if (keycode == 125)
-		all->py += 20;
+		all->py += 10;
 	if (keycode == 124)
-		all->px += 20;
+		all->px += 10;
 	if (keycode == 123)
-		all->px -= 20;
+		all->px -= 10;
 	if (keycode == 69)
 		all->z += 1;
 	if (keycode == 78)

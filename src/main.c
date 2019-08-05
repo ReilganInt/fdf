@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// gcc -I /usr/local/include main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
-
 #include "fdf.h"
 
 void		end(char *error)
@@ -24,15 +22,15 @@ void		new_point(t_fdf *all)
 {
 	all->px = 0;
 	all->py = 0;
-	all->ha = 0;
+	all->height = 0;
 }
 
 void		new_image(t_fdf *all)
 {
-	all->img_ptr =	mlx_new_image(all->mlx_ptr, MAX_X, MAX_Y);
+	all->img_ptr = mlx_new_image(all->mlx_ptr, MAX_X, MAX_Y);
 	all->data = mlx_get_data_addr(all->img_ptr, &all->bpp, &all->sl, &all->edi);
 	if (!(all->data))
-		end("error: unable to create image\n");
+		end("error: unable to create image");
 	all->bpp /= 8;
 }
 
@@ -51,13 +49,13 @@ int			main(int argc, char **argv)
 	t_fdf	all;
 
 	if (argc != 2)
-		end("usage: ./fdf your_map\n");
+		end("usage: ./fdf your_map");
 	if (!(fd = open(argv[1], O_RDONLY)))
-		end("error: unable to open file\n");
+		end("error: unable to open file");
 	maxy = validation(fd);
 	close(fd);
 	if (!(fd = open(argv[1], O_RDONLY)))
-		end("error: unable to open file\n");
+		end("error: unable to open file");
 	fill_all(fd, maxy, &all);
 	init_all(&all);
 	if (all.row > 50)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static size_t		ft_line_len(t_fd *cur, t_list *end, void *end_line)
 {

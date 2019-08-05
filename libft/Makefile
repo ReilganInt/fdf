@@ -46,6 +46,4 @@ clean:
 fclean: clean
 		@rm -f $(NAME)
 
-re:
-		@$(MAKE) fclean --no-print-directory
-		@$(MAKE) all --no-print-directory
+re: fclean all

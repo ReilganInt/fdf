@@ -23,27 +23,17 @@ void		chenge_z(t_fdf *all)
 		j = 0;
 		while (j < all->row)
 		{
-			if (all->map[i][j] == -1 && all->ha == 1)
-				all->map[i][j] += 2;
-			else if (all->map[i][j] == 1 && all->ha == -1)
-				all->map[i][j] -= 2;
+			if (all->map[i][j] == -1 && all->height == 1)
+				all->map[i][j] += 3;
+			else if (all->map[i][j] == 1 && all->height == -1)
+				all->map[i][j] -= 3;
 			else if (all->map[i][j] != 0)
-			all->map[i][j] += all->ha;
+				all->map[i][j] += all->height;
 			j++;
 		}
 		i++;
 	}
-}
-
-void		restart(char ***map, int j, char **line)
-{
-	int		x;
-
-	x = 0;
-	while (*map[x] && x < j)
-		free(*map[x++]);
-	free(*map);
-	ft_memdel((void **)line);
+	all->height = 0;
 }
 
 int			fill_nbr(char *map)
@@ -53,7 +43,7 @@ int			fill_nbr(char *map)
 	nbr = 0;
 	if (*map && *map == '0')
 		nbr = 0;
-	else if (*map && *map >'0' && *map <= '9')
+	else if (*map && *map > '0' && *map <= '9')
 		nbr = ft_atoi(&(*map));
 	return (nbr);
 }
@@ -61,11 +51,12 @@ int			fill_nbr(char *map)
 int			*fill_line(char **map, int j)
 {
 	int		i;
-	int		*tab = NULL;
+	int		*tab;
 
 	i = 0;
+	tab = NULL;
 	if (!(tab = (int *)malloc(sizeof(int) * j)))
-		end("error: memory cannot be allocated\n");
+		end("error: memory cannot be allocated");
 	while (map[i] && i < j)
 	{
 		tab[i] = fill_nbr(map[i]);
@@ -84,9 +75,9 @@ t_fdf		*fill_all(int fd, int maxy, t_fdf *all)
 
 	i = 0;
 	j = 0;
-	all->row = maxy;
+	all->col = maxy;
 	if (!(tab = (int **)malloc(sizeof(int *) * maxy)))
-		end("error: memory cannot be allocated\n");
+		end("error: memory cannot be allocated");
 	while (get_next_line(fd, &line) && i < maxy)
 	{
 		map = ft_strsplit(line, ' ');
@@ -94,10 +85,11 @@ t_fdf		*fill_all(int fd, int maxy, t_fdf *all)
 			while (map[j])
 				j++;
 		tab[i++] = fill_line(map, j);
-		restart(&map, j, &line);
+		free_split(map, j);
+		ft_memdel((void **)&line);
 	}
 	ft_memdel((void **)&line);
 	all->map = tab;
-	all->col = j;
+	all->row = j;
 	return (all);
 }

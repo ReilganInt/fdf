@@ -22,7 +22,8 @@ SRC		:= main.c \
 			color.c \
 			image.c \
 			keys.c \
-			validation.c
+			validation.c \
+			bonus.c
 OBJ		:= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 CC		:= gcc
@@ -34,10 +35,10 @@ CFLAGS	:= -Wall -Wextra -Werror
 all: $(NAME)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -I $(LIB_DIR)/includes -I $(INC_DIR) -I ./minilibx_macos -o $@ -c $<
+	$(CC) -g $(CFLAGS) -I $(LIB_DIR)/includes -I $(INC_DIR) -o $@ -c $<
 
 $(NAME): dir $(OBJ)
-	$(CC) $(OBJ) -L $(LIB_DIR) -l ft -o $(NAME)
+	$(CC) $(OBJ) -L $(LIB_DIR) -l ft -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 dir:
 	mkdir -p $(OBJ_DIR)
